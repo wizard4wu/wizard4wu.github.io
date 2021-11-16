@@ -1,0 +1,31 @@
+header:
+  - titles:
+      # @start locale config
+      en      : &EN       Archive
+      en-US   : *EN
+      zh-Hans : &ZH_HANS  归档
+      zh      : *ZH_HANS
+      # @end locale config
+    url: /archive.html
+
+  - titles:
+      # @start locale config
+      en      : &EN       About
+      en-US   : *EN
+      zh-Hans : &ZH_HANS  关于
+      zh      : *ZH_HANS
+      # @end locale config
+    url: /about.html
+  - titles:
+      en      : &EN       Books
+      en-US   : *EN
+      zh-Hans : &ZH_HANS  书单
+      zh      : *ZH_HANS
+      # @end locale config
+    url: /book.html
+  - titles:
+      en: &EN       Link
+      en-US: *EN
+      zh-Hans: &ZH_HANS  链接
+      zh: *ZH_HANS
+    url: /link.html
