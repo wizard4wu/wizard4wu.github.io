@@ -151,9 +151,9 @@ pageview:
 
   ## Leancloud
   leancloud:
-    app_id    : yipImC0jwRdhPI4MmzwFYQI7-gzGzoHsz # LeanCloud App id
-    app_key   : a6m7K0QeUmX4u4TaWkklaneh # LeanCloud App key
-    app_class : Counter # LeanCloud App class
+    app_id    : DGIFNPHwGhoBLcGuvPp5X8Oc-gzGzoHsz # LeanCloud App id
+    app_key   : MJhkfiCRzIMyYnuDEBKI9fPK # LeanCloud App key
+    app_class : blog # LeanCloud App class
 
 ## => Search
 ##############################
