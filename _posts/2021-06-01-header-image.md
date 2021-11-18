@@ -1,11 +1,7 @@
 ---
 title: Post with Header Image
 tags: TeXt
-key: azzdd.fddd
-article_header:
-  type: cover
-  image:
-    src: /screenshot.jpg
+key: azzzzddd
 lightbox: true
 ---
 
