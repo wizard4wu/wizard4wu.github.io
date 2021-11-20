@@ -74,15 +74,6 @@
               <li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="{{ include.article.key }}">0</span> {{ _locale_views }}</li>
             {%- endif -%}
           {%- endif -%}
-
-          {% if site.custom.enable %}
-          <span id="{{page.key}}" class="leancloud_visitors" data-flag-title="{{ page.title }}">
-        <span class="post-meta-divider">|</span>
-
-        <span class="post-meta-item-text"> Hits:  </span>
-        <span class="leancloud-visitors-count"></span>
-       </span>
-          {% endif %}
         </ul>
       {%- endif -%}
 

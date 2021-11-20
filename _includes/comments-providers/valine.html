@@ -13,7 +13,7 @@
 
 <div id="vcomments"></div>
 
-{%- if _VALINE_VISITOR -%}
+{%- if _VALINE_VISITOR -%}    
 <span id="{{page.url}}" class="leancloud-visitors" data-flag-title={{page.title}}>
 </span>
 {%- endif -%}
@@ -25,7 +25,6 @@
       appId:  '{{ _VALINE_APP_ID }}',
       appKey: '{{ _VALINE_APP_KEY }}',
       verify: true,
-      visitor: true,
     };
     {%- if _VALINE_PLACEHOLDER -%}
       _config.placeholder = '{{ _VALINE_PLACEHOLDER }}';
@@ -33,14 +32,13 @@
     {%- assign _page_lang_slice =  page.lang | slice: 0, 2 -%}
     {%- if _page_lang_slice != 'zh'  -%}
       _config.lang = 'en';
-    {%- endif -%}
+    {%- endif -%}  
     {%- if _VALINE_VISITOR -%}
       _config.visitor = 'true';
     {%- endif -%}
     {%- if _VALINE_META -%}
       _config.meta = {{ _VALINE_META}};
     {%- endif -%}
-    console.log("dddddd,")
     new Valine(_config);
   });
 </script>

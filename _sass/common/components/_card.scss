@@ -7,7 +7,6 @@
   & > :first-child {
     border-top-left-radius: map-get($base, border-radius);
     border-top-right-radius: map-get($base, border-radius);
-    margin-right: 10px;
   }
   & > :last-child {
     border-bottom-right-radius: map-get($base, border-radius);
