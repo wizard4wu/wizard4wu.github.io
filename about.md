@@ -1,74 +1,52 @@
 ---
 layout: article
 titles:
-  # @start locale config
-  en      : &EN       About
-  en-GB   : *EN
-  en-US   : *EN
-  en-CA   : *EN
-  en-AU   : *EN
-  zh-Hans : &ZH_HANS  关于
-  zh      : *ZH_HANS
-  zh-CN   : *ZH_HANS
-  zh-SG   : *ZH_HANS
-  zh-Hant : &ZH_HANT  關於
-  zh-TW   : *ZH_HANT
-  zh-HK   : *ZH_HANT
-  ko      : &KO       소개
-  ko-KR   : *KO
-  fr      : &FR       À propos
-  fr-BE   : *FR
-  fr-CA   : *FR
-  fr-CH   : *FR
-  fr-FR   : *FR
-  fr-LU   : *FR
-  # @end locale config
+# @start locale config
+en      : &EN       About
+en-GB   : *EN
+en-US   : *EN
+en-CA   : *EN
+en-AU   : *EN
+zh-Hans : &ZH_HANS  关于
+zh      : *ZH_HANS
+zh-CN   : *ZH_HANS
+zh-SG   : *ZH_HANS
+zh-Hant : &ZH_HANT  關於
+zh-TW   : *ZH_HANT
+zh-HK   : *ZH_HANT
+ko      : &KO       소개
+ko-KR   : *KO
+fr      : &FR       À propos
+fr-BE   : *FR
+fr-CA   : *FR
+fr-CH   : *FR
+fr-FR   : *FR
+fr-LU   : *FR
+
+# @end locale config
 key: page-about
+comment: true
+pageview: true
+show_author_profile: true
 ---
+<div>{%- include extensions/weather.html -%}</div>
 
-![TeXt Theme](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg)
+### About Me
 
-TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.
+本着对工作的记录，又逐渐把博客推上日程了。其实刚毕业的时候也写过一段时间，记录的都是一些工作中遇到的坑和总结，后来由于忙碌或者是没啥兴趣等原因去打理博客，就这样一再消失。
 
-```javascript
-(() => console.log('Hello, World!'))();
-```
+最近重新推出博客其实是有原因的，最主要是发现了极客时间上有一系列很好的文章，然后由于收费于是在网上找到了一个[网站](https://study.10086.fund:23350)，免费而且随时都可以访问。最初用着很舒服的，每天可以在早上或者睡前看看，后来突然发现该网站限制在每天早上八点到晚上十点之间可以访问。 为此我还发了邮件给了网站的管理员（其实也就类似一个博客，由一个人维护）。不知道是没看邮件还是压根不想理我，我等了两天硬是没收到邮件。我索性有了自己重新捡起博客的想法，然后把文章上传到自己的博客做成连接的形式观看。
 
-## Features
+从有想法到实践，也就一天的时间。写了代码批量获取了该网站上比较好的文章，然后利用github page作为访问页。 这期间当然经历了很多，遇到了问题也解决了很多问题，终于派上了用场。
 
-- Responsive
-- Semantic HTML
-- Skins
-- Highlight Theme
-- Internationalization
-- Search
-- Table of contents
-- Authors
-- Additional styles (alert, tag, image, icon, button, grid, etc)
-- Extensions (audios, videos, slides, demos)
-- Markdown enhancements ([MathJax](https://www.mathjax.org/), [mermaid](https://mermaidjs.github.io/), [chartjs](http://www.chartjs.org/))
-- Sharing ([AddToAny](https://www.addtoany.com/), [AddThis](https://www.addthis.com/))
-- Comments ([Disqus](https://disqus.com/), [Gitalk](https://gitalk.github.io/), [Valine](https://valine.js.org/en/))
-- Pageview ([LeanCloud](https://leancloud.cn/))
-- Analytics ([Google Analytics](https://analytics.google.com/analytics/web/))
-- RSS ([jekyll-feed](https://github.com/jekyll/jekyll-feed))
+之前使用的是Gridea软件来托管博客，这次使用的是jekyll来实现博客的，就该博客的主题我在网上就找了半天。 其实当时找到的也不是很满意的那种，后来无意间发现了TeXt主题，简直就是一见钟情。后来在使用上也遇见了很多坑，不过也还好我还是一个比较喜欢折腾的人。
 
-## Skins
+就我个人而言，逼迫一个人做一件事其实很容易。其实消灭懒惰的成本很低，一些不愿迁就的小事足以。当然我在完成博客主题的时候遇到了很多问题，绝不是说按照文档配置就能完美解决问题的，还有就是移动端的适配以及调试各种样式对应我这种前端小白而言就是最大的阻力。最近感觉挺充实的，学习了很多，虽然会被遗忘，但是以后捡起来的成本就会低很多。所以有时候折腾折腾也不是一件坏事。
 
-TeXt has 6 built-in skins, you can also set up your own skin.
+最近看了一篇文章，说了一句我比较喜欢的话，我加了一点修饰和大家分享下——有时候，从“不知” 到 “明白”，中间不是鸿沟天堑，往往只差一次身临其境的经历。
 
-| `default` | `dark` | `forest` |
-| --- |  --- | --- |
-| ![Default](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/skins_default.jpg) | ![Dark](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/skins_dark.jpg) | ![Forest](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/skins_forest.jpg) |
+至此，我会陆续把我曾经得博客搬运过来。enmmm，希望胖子吴的博客有个好的开始吧！
 
-| `ocean` | `chocolate` | `orange` |
-| --- |  --- | --- |
-| ![Ocean](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/skins_ocean.jpg) | ![Chocolate](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/skins_chocolate.jpg) | ![Orange](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/skins_orange.jpg) |
 
-### Highlight Theme
 
-TeXt use [Tomorrow](https://github.com/chriskempson/tomorrow-theme) as the highlight theme.
 
-| `tomorrow` | `tomorrow-night` | `tomorrow-night-eighties` | `tomorrow-night-blue` | `tomorrow-night-bright` |
-| --- |  --- | --- | --- |  --- |
-| ![Tomorrow](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/highlight_tomorrow.png) | ![Tomorrow Night](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/highlight_tomorrow-night.png) | ![Tomorrow Night Eighties](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/highlight_tomorrow-night-eighties.png) | ![Tomorrow Night Blue](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/highlight_tomorrow-night-blue.png) | ![Tomorrow Night Bright](https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/highlight_tomorrow-night-bright.png) |
