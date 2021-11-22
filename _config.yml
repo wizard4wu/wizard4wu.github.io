@@ -35,7 +35,7 @@ timezone: # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for
 ##############################
 author:
   type      : "person" # "person" (default), "organization"
-  name      : 胖子吴
+  name      : 微热的吴
   url       :
   avatar    : https://z3.ax1x.com/2021/11/17/IhfRMV.jpg # path or url of avatar image (square)
   bio       : 老实巴交，不要惹我。
