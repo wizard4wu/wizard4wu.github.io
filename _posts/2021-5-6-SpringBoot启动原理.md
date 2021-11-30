@@ -1,6 +1,6 @@
 ---
 title: 'Spring Boot如何实现零配置'
-key: key-2021-05-06SpringBoot
+key: key-2021-05-06SpringBoot-config
 tags: [springboot, java]
 comment: true
 footer: true
@@ -16,9 +16,11 @@ lightbox: true
 - Servlet的容器：Tomcat,Jetty,Jboos等，其中Nginx、Apache是http容器;
 - Web.xml配置（配置listener和servlet）
    1. listener需要配置`ContextLoaderListener`，再通过访问`webApplicationContext`加载spring上下文，实际就是为了加载spring.xml文件；
-```java
+   2. 配置servlet是为了启动`spring-MVC`, 该过程是通过`DispatchServlet`访问spring-mvc.xml
+
 web.xml 文件
 
+```java
 <context-param>
 <param-name>contextConfigLocation</param-name>
 <param-value>classpath:/config/spring.xml</param-value>
@@ -28,8 +30,8 @@ web.xml 文件
 <description>listener</description>
 <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 </listener>
+
 ```
-   2. 配置servlet是为了启动`spring-MVC`, 该过程是通过`DispatchServlet`访问spring-mvc.xml
 
 <font color = "blue">web项目的启动流程:</font>Tomcat启动时会解析web.xml文件 $\rightarrow$ 通过web.xml文件初始化listener和servlet      $\rightarrow$     执行`listener(ContextLoaderListener)` 加载spring    $\rightarrow$    执行`servlet(DispatchServlet)`加载spring-mvc
 
