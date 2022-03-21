@@ -62,7 +62,7 @@ public class UserService {
 
 对此，带着以上几个问题作为出发点一起去探个究竟。
 
-![image-20220319194009605]({{"/assets/mstile-144x144.png" | absolute_url}})
+![image-20220319194009605]({{"/assets/picture/image-20220319194009605.png" | absolute_url}})
 
 由上图可知，代理对象中是包含了目标类，但是并没有注入对应的spring的bean，对此，我们得从spring的bean的生命周期说起。
 
@@ -93,19 +93,19 @@ class UserServiceProxy extends UserService{
 
 上述是cglib代理执行的基本过程，其是通过继承的方式实现代理的。因为如果类被final修饰，或者方法被final或者private修饰时，是不能实现继承关系的，因此在该情况下代理失败，但是会报错吗？在网上看了几篇文章，然后发现有一篇文章下面提出了和我很相似的疑问，而博主在文中并没有给予解释，贴出问题如下：
 
-![](https://github.com/Encyclopedias/wizard/blob/main/_posts/2022/03/21/picture/2022-03-20-10-04-36-image.png)
+![]({{"/assets/picture/2022-03-20-10-04-36-image.png" | absolute_url}})
 
 对于问题一：对于反射本身而言，都是传入当前的对象也就是代理对象实现反射，但是在代理对象中存在回调机制，对于私有方法是不会执行代理中的方法拦截器的回调，因此执行私有方法是基于代理对象去执行的而不是目标对象；而对于public等其他能够被代理的方法是可以进入回调方法中，在该方法中使用`this.target`这个目标对象去执行反射方法的，而这个`this.target`是来源于Spring中的Bean对象，所有的依赖属性都被填充了。如下图所示：
 
-![](https://github.com/Encyclopedias/wizard/blob/main/_posts/2022/03/21/picture/2022-03-20-09-52-39-image.png)
+![]({{"/assets/picture/2022-03-20-09-52-39-image.png" | absolute_url}})
 
-![image-20220319194230836](https://github.com/Encyclopedias/wizard/blob/main/_posts/2022/03/21/picture/image-20220319194230836.png)
+![image-20220319194230836]({{"assets/picture/image-20220319194230836.png" | absolute_url}})
 
 对于问题二：正常情况下，通过反射是拿不到父类的私有方法的，我自己还做了实验输出该子类的所有方法，硬是没有发现父类的私有方法。后来使用EventBus中的`@Subscribe`
 
 注解发现这里面原来是可以获取父类的私有方法的，如下图所示：
 
-![image-20220319200800998](https://github.com/Encyclopedias/wizard/blob/main/_posts/2022/03/21/picture/image-20220319200800998.png)
+![image-20220319200800998]({{"assets/picture/image-20220319200800998.png" | absolute_url}})
 
 上述的代码是获取了当前类的所有父类中的打上`@Subscriber`的方法，包括了私有方法。我自己使用代码实验了获取父类的私有方法并用子类对象执行的方式，因此不会报`NoSuchMethodException`,该方法是来源于父类的，这也证实一点:<font color=red>子类是可以通过反射的方式获取父类的任何属性和方法.</font>
 
@@ -151,7 +151,7 @@ public class Teacher extends People {
 ```
 
 然后我把public的修饰改成了protect了，发现也是可以成功实现回调的，唯一不同是在`invokeJoinpoint()`中走的是else的逻辑，public方法走的是if的逻辑。
-![](https://github.com/Encyclopedias/wizard/blob/main/_posts/2022/03/21/picture/2022-03-20-09-56-05-image.png)
+![]("/assets/picture/2022-03-20-09-56-05-image.png" | absolte_url}})
 
 ### 3.结果总结
 
