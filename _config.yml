@@ -175,7 +175,7 @@ analytics:
     tracking_id : # Google Analytics id for the site
     anonymize_ip: false # Anonymize IP tracking for Analytics
 
-
+encoding: UTF-8
 ## => Build
 ##############################
 markdown    : kramdown
