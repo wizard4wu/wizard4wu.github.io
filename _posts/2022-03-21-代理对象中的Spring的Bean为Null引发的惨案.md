@@ -62,7 +62,7 @@ public class UserService {
 
 对此，带着以上几个问题作为出发点一起去探个究竟。
 
-![image-20220319194009605](https://github.com/Encyclopedias/wizard/blob/main/_posts/2022/03/21/picture/image-20220319194009605.png)
+![image-20220319194009605]({{"/assets/mstile-144x144.png" | absolute_url}})
 
 由上图可知，代理对象中是包含了目标类，但是并没有注入对应的spring的bean，对此，我们得从spring的bean的生命周期说起。
 
