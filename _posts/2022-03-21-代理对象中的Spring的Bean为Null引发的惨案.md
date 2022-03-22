@@ -151,7 +151,7 @@ public class Teacher extends People {
 ```
 
 然后我把public的修饰改成了protect了，发现也是可以成功实现回调的，唯一不同是在`invokeJoinpoint()`中走的是else的逻辑，public方法走的是if的逻辑。
-![]("/assets/picture/2022-03-20-09-56-05-image.png" | absolte_url}})
+![]({{"/assets/picture/2022-03-20-09-56-05-image.png" | absolte_url}})
 
 ### 3.结果总结
 
