@@ -65,7 +65,7 @@ spring-security的依赖：
 
 跳到登陆页面后需要你输入登陆用户名和密码后才能正确返回该API的返回值的，<font color=red>用户名</font>是：User，<font color=red>密码</font>是在服务启动的时候随机生成的字符串，如下图所示：
 
-![image-20220429223815346]({{"assets/picture/2022-05/image-20220429223815346.png" | absolute_url}}
+![image-20220429223815346]({{"assets/picture/2022-05/image-20220429223815346.png" | absolute_url}})
 
 当你在application.yml文件加上你的自己的用户名和密码后，即可输入自己的配置用户名密码即可通过校验获取该API返回的数据，配置如下：
 
