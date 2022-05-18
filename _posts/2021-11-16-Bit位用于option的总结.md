@@ -159,8 +159,108 @@ public class OptionPro {
 ```
 
 <font color = red>Note:</font>上述一些方法可以使用泛型方式抽成共用的方法用于整个项目中的应用。
+## 4.项目实战
 
-## 4.总结
+由于在项目中使用时，会存在缓存的读取和写入操作，那么这时序列化和反序列化就是重点了，如何让整个过程性能消耗最低呢？我给出了以下的解决方案。
+
+```java
+
+//定义一个Util方法 用于int <-----> enumset。
+public class EnumUtil<E> {
+
+    public static  <E extends Enum<E> & EnumIndex> int toValue(EnumSet<E> enumSet){
+        int value = 0;
+        Iterator<E> optionProEnumIterator = enumSet.iterator();
+        while (optionProEnumIterator.hasNext()){
+            int bitIndex = optionProEnumIterator.next().getBitIndex();
+            if( bitIndex >= 0 && bitIndex < Integer.SIZE - 1){
+                value |= 1 << bitIndex;
+            }
+        }
+        return value;
+    }
+
+    public static <E extends Enum<E> & EnumIndex> EnumSet<E> buildEnumSet(int value, Class<E> enumClass){
+        EnumSet<E> enumSet = EnumSet.noneOf(enumClass);
+        E[] enums = enumClass.getEnumConstants();
+        Arrays.stream(enums).filter(e -> isSet(value, e.getBitIndex())).forEach(enumValue -> enumSet.add(enumValue));
+        return enumSet;
+    }
+
+    public static boolean isSet(int option, int bitIndex){
+        int value = 1 << bitIndex;
+        return value == (option & value);
+    }
+}
+
+//定义接口，用于在上述的util方法中获取bit位
+public interface EnumIndex<E> {
+    int getBitIndex();
+}
+
+
+@Data
+public class OptionProject {
+
+    private Integer value;
+
+    @JsonIgnore
+    private EnumSet<OptionProject.OptionProjectEnum> optionProEnumSet;
+
+    public static void main(String[] args) throws JsonProcessingException {
+        OptionProject project = new OptionProject();
+        project.setValue(6);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(project);
+        System.out.println(jsonString);
+
+        OptionProject optionProject = objectMapper.readValue(jsonString, OptionProject.class);
+        System.out.println(optionProject.activeUser());
+    }
+
+    private EnumSet<OptionProject.OptionProjectEnum> retriveOptionProjectEnumSet() {
+        if (null == this.optionProEnumSet) {
+            this.optionProEnumSet = EnumUtil.buildEnumSet(this.getValue(), OptionProjectEnum.class);
+        }
+        return optionProEnumSet;
+    }
+
+    public boolean disableUser() {
+        return this.containsOption(OptionProjectEnum.DISABLE_USER);
+    }
+
+    public boolean muteUser() {
+        return this.containsOption(OptionProjectEnum.MUTE_USER);
+    }
+
+    public boolean activeUser() {
+        return this.containsOption(OptionProjectEnum.ACTIVE_USER);
+    }
+
+    private boolean containsOption(OptionProjectEnum optionProjectEnum) {
+        return this.retriveOptionProjectEnumSet().contains(optionProjectEnum);
+    }
+
+    public enum OptionProjectEnum implements EnumIndex {
+        DISABLE_USER(0), MUTE_USER(1), ACTIVE_USER(2);
+
+        private final int bitIndex;
+
+        OptionProjectEnum(int bitIndex) {
+            this.bitIndex = bitIndex;
+        }
+
+        public int getBitIndex() {
+            return bitIndex;
+        }
+    }
+}
+```
+
+在上述的EnumSet中，定义了变量，但是没有让其序列化，只让value序列化和反序列化。这种方式主要是采用懒汉式实现加载EnumSet，在我们通过接口获取缓存时，如果没有用到对于option的判断，我们就不需要去加载EnumSet, 因为通过int--->EnumSet是要经历一次循环操作的，这种不必要的消耗该省则省。当然如果存在对optiona的判断，也就是存在对disableUser(),muteUser(),activeUser()的调用，此时去加载EnumSet用于判断，大大降低性能消耗。
+
+## 5.总结
 
 **基础应用和阶级应用的对比**：
 
