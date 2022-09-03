@@ -1,3 +1,18 @@
+---
+title: IDEA集成Jrebel实现热部署
+key: AAA-2022-08-23-IDEAwithDocker
+tags: [Docker]
+comment: true
+footer: true
+show_edit_on_github: false
+pageview: true
+lightbox: true
+aside:
+toc: true
+show_subscribe: false
+lightbox: true
+---
+
 ### **下载安装**
 在idea中点击file->settings，再点击plugins, 在搜索框中输入JRebel, 选择第一个插件并点击“install”按钮，安装完成后点击确定并重启idea。
 
