@@ -1,7 +1,7 @@
 ---
 title: IDEA集成Jrebel实现热部署
-key: AAA-2022-08-23-IDEAwithDocker
-tags: [Docker]
+key: AAA-2022-08-23-IDEAwithJrebel
+tags: [IDEA, Jrebel]
 comment: true
 footer: true
 show_edit_on_github: false
