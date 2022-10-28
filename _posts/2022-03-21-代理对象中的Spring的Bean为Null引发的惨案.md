@@ -50,7 +50,7 @@ public class UserService {
 
 2. 其实上述的代码中如果不生成代理类是没有任何问题的，但是如果一旦加了切面形成了代理类，那就会导致私有方法中orderService为null， 所以会产生NPE，我司的生产环境也是产生了大量的NPE异常，后来发现定位到该问题。
 
-其实很多case和上述相似，例如加了@Transactional的私有方法，controller中的私有方法，或者是被final修饰了方法或者类都会相同的情况。
+其实很多case和上述相似，例如加了@Transactional的私有方法，或者是被final修饰了方法或者类都会相同的情况。
 
 ### 2. 原因分析
 
