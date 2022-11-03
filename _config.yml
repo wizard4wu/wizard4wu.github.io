@@ -35,10 +35,10 @@ timezone: # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for
 ##############################
 author:
   type      : "person" # "person" (default), "organization"
-  name      : 微热的吴
+  name      : 程序员小吴师兄
   url       :
   avatar    : https://z3.ax1x.com/2021/11/17/IhfRMV.jpg # path or url of avatar image (square)
-  bio       : 老实巴交，不要惹我。
+  bio       : 一名爱抠细节的处女座码农 热衷分享素人实践过程的干货 同时感受费曼学习法的快乐
   email     : wizardwu0901@gmail.com
   facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
   twitter   : # "user_name" the last part of your profile url, e.g. https://twitter.com/user_name
@@ -209,7 +209,7 @@ defaults:
       sharing: true
       license: true
       aside:
-        toc: true
+        toc: false
       show_edit_on_github: true
       show_subscribe: true
       pageview: true

@@ -183,13 +183,14 @@ layout: base
         {%- endif -%}
             <div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside">
-                {%- if page.aside -%}
-                  <aside class="page__aside js-page-aside">
-                    {%- include aside/toc.html -%}
-                  </aside>
-                {%- endif -%}
-              </div>
+<!--              {%- if page.aside -%}-->
+<!--              <div class="col-aside d-print-none js-col-aside">-->
+<!--                  <aside class="page__aside js-page-aside">-->
+<!--                    {%- include aside/toc.html -%}-->
+<!--                  </aside>-->
+<!--              </div>-->
+<!--              {%- endif -%}-->
+
 
               <div class="col-main cell cell--auto">
                 {%- include main/top/custom.html -%}
@@ -208,12 +209,14 @@ layout: base
                   {%- include article-header.html article=page -%}
                   {%- include article-info.html article=page -%}
                 {%- endif -%}
-
                     <div class="js-article-content">{{ content }}</div>
                     {%- if _comment != false -%}
                       <section class="page__comments d-print-none">{%- include comments.html -%}</section>
                     {%- endif -%}
-                </article>
+                    <div style="text-align:center">
+                      <h2>欢迎关注 我的公众号</h2>
+                      <img src="/assets/code_farmer.jpg" alt="image-code_farmer"></div>
+                  </article>
                 {%- include main/bottom/custom.html -%}
               </div>
             </div>
