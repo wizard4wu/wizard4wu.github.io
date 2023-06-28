@@ -66,12 +66,11 @@ bin log提交成功，redo log 提交失败。主库重启无法使用redo log�
 
 #### 2.2基于MySQL二阶段提交方案
 
-分成三步去完成整个提交流程：其中步骤1作为一个事务，步骤2和3作为一个事务
+分成三步去完成整个提交流程：
 
 
 
 <font color="purple">步骤1.执行sql语句并将该条数据标记成prepare状态；</font>
-
 
 
 <font color="purple">步骤2.调用API写入数据到ES侧；</font>
