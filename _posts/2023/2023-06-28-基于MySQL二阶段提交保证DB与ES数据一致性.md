@@ -1,5 +1,5 @@
 ---
-title: '方案设计|基于MySQL二阶段提交保证DB与ES数据一致性'
+title: '方案设计 | 基于MySQL二阶段提交保证DB与ES数据一致性'
 key: key-2023-6-28-DBandESDataConsistent
 tags: ["MySQL","方案设计"]
 comment: true
