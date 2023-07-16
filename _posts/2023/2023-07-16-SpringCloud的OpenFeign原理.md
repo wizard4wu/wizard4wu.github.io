@@ -97,7 +97,7 @@ b).Apache Http
 
 引入依赖
 
-```pom
+```properties
  <dependency>
     <groupId>io.github.openfeign</groupId>
     <artifactId>feign-httpclient</artifactId>
