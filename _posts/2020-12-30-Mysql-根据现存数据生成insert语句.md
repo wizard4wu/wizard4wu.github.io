@@ -1,7 +1,7 @@
 ---
 title: Mysql:根据现存数据生成insert语句
 key: AAA-2021-03-08-jsonSerialize
-tags: [Mysql]
+tags: [MySQL]
 comment: true
 footer: true
 show_edit_on_github: false

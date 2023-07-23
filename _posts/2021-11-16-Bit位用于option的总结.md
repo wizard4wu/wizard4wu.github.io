@@ -1,7 +1,7 @@
 ---
-title: Bit位用于Option的总结
+title: 方案设计 | Bit位用于Option的总结
 key: AAA-2021-11-16-bit-option
-tags: [bit, option, java]
+tags: [方案设计]
 comment: true
 footer: true
 show_edit_on_github: false

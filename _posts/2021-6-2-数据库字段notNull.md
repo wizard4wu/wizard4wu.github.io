@@ -1,7 +1,7 @@
 ---
 title: '数据库字段的not null意义何在'
 key: AAA-2021-6-2-not null
-tags: [mysql]
+tags: [MySQL]
 comment: true
 footer: true
 show_edit_on_github: false

@@ -1,7 +1,7 @@
 ---
 title: 'Spring Boot如何实现零配置'
 key: key-2021-05-06SpringBoot-config
-tags: [springboot, java]
+tags: [SpringBoot]
 comment: true
 footer: true
 show_edit_on_github: false

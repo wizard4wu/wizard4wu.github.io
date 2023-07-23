@@ -1,7 +1,7 @@
 ---
 title: 其实parallelStream流真的没那么快
 key: AAA-2022-11-13-jdkNewFeature
-tags: [Java, parallelStream]
+tags: [Java]
 comment: true
 footer: true
 show_edit_on_github: false
