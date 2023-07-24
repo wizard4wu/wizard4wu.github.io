@@ -336,6 +336,9 @@ public <S, T> MultiNodeResult<T> executeMultiKeyCommand(MultiKeyClusterCommandCa
 	}
 ```
 小编想法：不知道作者是出于什么原因，要把每一个key作为一个任务去获取，实际上把同一个节点的所有key放在一起批量获取即可。例如：可以先将所有的key按照节点进行分组，比如A节点就可以一把获取数据了，这样请求的次数从key的个数降到了小于等于节点数量。
+
+后来做了一个实验：在同一个节点上使用mget时，即使这些key属于同一个节点，但是你会得到`(error) CROSSSLOT Keys in request don't hash to the same slot`的错误。这也就意味着redis只支持同一个slot情况下的批量获取，不支持同一个实例下的key批量获取。
+
 ### 4. 总结
 
 本文主要讲述了redis的cluster集群模式的配置方式、启动加载cluster数据的原理、执行get和multiGet方法的原理。在扩容时发生槽位变更后，本地缓存会根据异常做出更新本地缓存的操作，但是对于缩容时是无法实现的。因为缩容后对应的server从集群中被移除，不提供服务了。
