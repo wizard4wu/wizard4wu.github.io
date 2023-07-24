@@ -12,7 +12,7 @@ toc: true
 show_subscribe: false
 ---
 ### 1.redis集群模式配置
-1.引入redis的依赖`
+1.引入redis的依赖
 
 ```
 <dependency>
@@ -141,8 +141,8 @@ JedisConnectionFactory在afterProperties方法中需要创建JedisCluster对象�
 ```java
   //nodes的映射关系是节点和对应的JedisPool key：ip:port作为key
   private final Map<String, JedisPool> nodes = new HashMap<>();
-
-  private final Map<Integer, JedisPool> slots = new HashMap<>();//slots的映射关系是槽位和对应的JedisPool
+  //slots的映射关系是槽位和对应的JedisPool
+  private final Map<Integer, JedisPool> slots = new HashMap<>();
 ```
 
 Note：`nodes先完成加载，然后在加载slots时，根据ip和port构建出key，再根据key在nodes中取JedisPool放到slots中。如果是3个实例的话nodes的大小为三，不算从节点，但是对于slots中始终是16384，其中JedisPool是重用的。`
@@ -302,7 +302,7 @@ redis支持扩容是slot的变更，但是对于缩容时会产生问题CLUSTERD
 
 #### 3.2 multiGet调用
 
-mGet是可以批量的获取数据，和get区别的是使用了pipeline的方式，本质还是通过单个get任务扔到线程池中并行获取。由于pipeline的方式存在，会将这个get命令打包在一起发送，这样减少了频繁的请求产生。
+mGet是可以批量的获取数据，和get区别的是使用了并行的方式，本质还是通过单个get任务扔到线程池中并行获取。
 
 Note：<font color=red>multiGet对于没有获取到的数据会返回null值，业务中做好过滤null值。通常意义而已List中是不允许null值的，包括mybaits返回的List没有就不返回也不会在List中塞入null</font>
 
@@ -335,7 +335,7 @@ public <S, T> MultiNodeResult<T> executeMultiKeyCommand(MultiKeyClusterCommandCa
 		return collectResults(futures);
 	}
 ```
-
+小编想法：不知道作者是出于什么原因，要把每一个key作为一个任务去获取，实际上把同一个节点的所有key放在一起批量获取即可。例如：可以先将所有的key按照节点进行分组，比如A节点就可以一把获取数据了，这样请求的次数从key的个数降到了小于等于节点数量。
 ### 4. 总结
 
 本文主要讲述了redis的cluster集群模式的配置方式、启动加载cluster数据的原理、执行get和multiGet方法的原理。在扩容时发生槽位变更后，本地缓存会根据异常做出更新本地缓存的操作，但是对于缩容时是无法实现的。因为缩容后对应的server从集群中被移除，不提供服务了。
@@ -354,6 +354,6 @@ So 16k was in the right range to ensure enough slots per master with a max of 10
 
 结合作者原话，回答如下：
 
-16384长度大小是2kb，65535大小为 8kb。由于每个节点之间互相存在心跳，该心跳主要用于同步节点的数据，例如有没有槽位的变更。如果节点太多，心跳的消息头太大了，占用带宽从未影响正常的业务；
+16384长度大小是2kb，65535大小为 8kb。由于每个节点之间互相存在心跳，该心跳主要用于同步节点的数据，例如有没有槽位的变更。如果节点太多，心跳的消息头太大了，占用带宽从而影响正常的业务；
 
 作者建议不要使用超过1000个节点，节点太多会造成网络拥堵，那基于此前提的话，16384个槽完成够用了。确实够用，我在想作者是不是应该提供一个可配置的啊，比如我可能16384都用不到，我还想8192个槽位呢？或许你觉得我在抬杠，但是我个人认为对于这种阈值的解释很有主观因素。例如：为啥MySQL的页大小是16kb？为啥HashMap是0.75时扩容？为啥ArrayList初始容量是10？
