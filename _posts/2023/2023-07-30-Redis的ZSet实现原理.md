@@ -96,7 +96,7 @@ dict结构提供了value和score之间的映射关系；zskiplist就是跳表的
 使用链表存储，在查找一个元素时，主要是通过遍历的方式，每个元素比较一次，这样的话效率比较低。为了解决查找元素效率低的问题，前辈们使用跳表的方式来查找，如下图所示：
 <img src="/assets/picture/2023-07/image-20230730123354314.png" alt="image-20230730123354314"/>
 
-上图中查找67这个元素，首先在第一层找到48位置，然后降到下一层，再降到下一层，往右查找。第一层找到48时候就跳过12到48之间了的元素遍历，很大程度上提高了查找的性能。从整个查找的过程而言和二分查找过程基本类似，因此跳表的查找复杂度也是log(n)。另外上图中的三个链表只是省去了接近一般的元素，提供了一个稀疏的元素，也有人称其为稀疏索引。
+上图中查找67这个元素，首先在第一层找到48位置，然后降到下一层，再降到下一层，往右查找。第一层找到48时候就跳过12到48之间了的元素遍历，很大程度上提高了查找的性能。从整个查找的过程而言和二分查找过程基本类似，因此跳表的查找复杂度也是log(n)。另外上图中的三个链表只是省去了接近一半的元素，提供了一个稀疏的元素，也有人称其为稀疏索引。
 
 那对于48这个元素如何进行降层，然后降到最后一层进行查找呢？接下来看看ZSet在redis中的结构设计。
 
@@ -124,7 +124,7 @@ typedef struct zskiplist {
 
 将每一层的节点构建了相应的关系，这时就会可以使用降级的方式实现查找：
 <img src="/assets/picture/2023-07/image-20230730133153619.png" alt="image-20230730133153619"/>
-由上述的图和跳表的数据结构比较难建立起对应关系，对于下述的结构和跳表的结构很容易建立关系。
+由上述的图和跳表的数据结构比较难想象其对应关系，对于下述的结构和跳表的结构很容易联系之间的关系。
 <img src="/assets/picture/2023-07/image-20230730141610261.png" alt="image-20230730141610261"/>
 
 
@@ -134,9 +134,9 @@ ele = 48， score = 48(在图中没有显示)
 
 backward =  元素37的地址
 
-level[2] = {forward: null,  span:0}
+level[2] = {forward: null,  span:3}
 
-level[1] = {forward: null,  span:0}
+level[1] = {forward: null,  span:1}
 
 level[0] = {forward: null,  span:0}
 
@@ -146,9 +146,9 @@ ele = 12， score = 0(在图中没有显示)
 
 backward =  元素null的地址
 
-level[2] = {forward: 48,  span:3}
+level[2] = {forward: 48,  span:0}
 
-level[1] = {forward: 20,  span:1}
+level[1] = {forward: 20,  span:0}
 
 level[0] = {forward: 15,  span:0}
 
@@ -226,9 +226,9 @@ int zslRandomLevel(void) {
 跳表在创建节点时候，会生成一个范围在 0~1 的随机数，如果这个随机数小于 0.25（相当于概率 25%），那么层数就增加 1 层；然后继续生成下一个随机数，直到随机数的结果大于 0.25 结束，最终确定该节点的层数。这样的做法，相当于每增加一层的概率不超过 25%，层数越高，概率越低.
 
 ```java
-    //c.创建插入数据节点
+    //(c).创建插入数据节点
     x = zsljavareateNode(level,score,ele);
-    //d.更新level层的前节点指向当前新增的节点
+    //(d).更新level层的前节点指向当前新增的节点
     for (i = 0; i < level; i++) {
         //为新创建的节点的前驱节点赋值 和链表插入一样
         x->level[i].forward = update[i]->level[i].forward;
@@ -239,7 +239,7 @@ int zslRandomLevel(void) {
         x->level[i].span = update[i]->level[i].span - (rank[0] - rank[i]);
         update[i]->level[i].span = (rank[0] - rank[i]) + 1;
     }
-   //e.更新level[0]层的后节点
+   //(e).更新level[0]层的后节点
    x->backward = (update[0] == zsl->header) ? NULL : update[0];
     if (x->level[0].forward)
         x->level[0].forward->backward = x;
@@ -259,17 +259,17 @@ int zslRandomLevel(void) {
 
 x->level[0].forward = update[0] ->level[0].forward. 相当于把14的前驱节点23 赋给了20这个前驱节点；
 
-update[0]->level[0].forward = x,  把20这个节点赋给了14的前驱节
+update[0]->level[0].forward = x,  把20这个节点赋给了14的前驱节点
 
 这是第一层的插入过程，其他层依次类推。
 
-对于第三层之前存在的 上述update[2] = zsl -> head.
+对于第三层之前存在的上述update[2] = zsl -> head.
 
 因此此时 x->level[2].forward = update[2]->level[0].forward, 对于 update[2]->level[0].forward是新创建的层数，所以为null。
 
 update[2]->level[0].forward 指向了x节点。
 
-最后更新向前的节点，因为向前节点只有level[0]存在，所以只需要对level[0]进行更新。
+最后更新底层后驱节点，因为后驱节点只有level[0]存在，所以只需要对level[0]进行更新。
 
 #### 2.2删除节点数据
 
@@ -306,7 +306,6 @@ d).以新的score来新增这个节点；
 <img src="/assets/picture/2023-07/image-20230730204005449.png" alt="image-20230730204005449"/>
 
 1. 从顶层level[2]开始, ZSet中存储了level的最大值head.level[2].forward，这个值是12；
-
 2. 12 < 37, 则比较12.level[2].forward, 这个值是48；
 3. 48 > 37, 则进行for循环 level层数减一, 即12.level[1].forward, 这个值是20；
 4. 20 < 37, 则比较20.level[1].forward, 这个值是48；
