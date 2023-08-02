@@ -138,7 +138,7 @@ level[2] = {forward: null,  span:3}
 
 level[1] = {forward: null,  span:1}
 
-level[0] = {forward: null,  span:0}
+level[0] = {forward: 67,  span:0}
 
 以元素12这个节点为例：
 
@@ -151,10 +151,6 @@ level[2] = {forward: 48,  span:0}
 level[1] = {forward: 20,  span:0}
 
 level[0] = {forward: 15,  span:0}
-
-```java
-#define ZSKIPLIST_MAXLEVEL 32 /* Should be enough for 2^64 elements */
-```
 
 Redis 跳跃表默认允许最大的层数是 32，被源码中 ZSKIPLIST_MAXLEVEL 定义，当 Level[0] 有 2^64 个元素时，才能达到 32 层，所以定义 32 完全够用了。
 
@@ -222,6 +218,9 @@ int zslRandomLevel(void) {
     return (level<ZSKIPLIST_MAXLEVEL) ? level : ZSKIPLIST_MAXLEVEL; //不超过32的限制
 }
 ```
+```java
+#define ZSKIPLIST_MAXLEVEL 32 /* Should be enough for 2^64 elements */
+```
 
 跳表在创建节点时候，会生成一个范围在 0~1 的随机数，如果这个随机数小于 0.25（相当于概率 25%），那么层数就增加 1 层；然后继续生成下一个随机数，直到随机数的结果大于 0.25 结束，最终确定该节点的层数。这样的做法，相当于每增加一层的概率不超过 25%，层数越高，概率越低.
 
@@ -265,9 +264,9 @@ update[0]->level[0].forward = x,  把20这个节点赋给了14的前驱节点
 
 对于第三层之前存在的上述update[2] = zsl -> head.
 
-因此此时 x->level[2].forward = update[2]->level[0].forward, 对于 update[2]->level[0].forward是新创建的层数，所以为null。
+因此此时 x->level[2].forward = update[2]->level[2].forward, 对于 update[2]->level[0].forward是新创建的层数，所以为null。
 
-update[2]->level[0].forward 指向了x节点。
+update[2]->level[2].forward 指向了x节点。
 
 最后更新底层后驱节点，因为后驱节点只有level[0]存在，所以只需要对level[0]进行更新。
 
@@ -279,7 +278,7 @@ update[2]->level[0].forward 指向了x节点。
 
 (a).找到删除的位置；
 
-(b).删除节点是最高的level，更新ZSet的level；
+(b).如果删除节点是最高的level，更新ZSet的level；
 
 (c).长度减一；
 
