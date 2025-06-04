@@ -106,11 +106,11 @@ public static SingletonSecondDemo getInstance_2(){
     }
 ```
 #### 4.使用私有构造方法强制不可实例化
-就是使用private修饰构造方法来禁止对象的实例化。例如项目中的静态工具类需要使用private来修饰构造方法，方式其他人来创建一个静态类对象。避免反射来调用的话，在这个私有的构造函数中抛出一个异常；[可用于工具类中]
+就是使用private修饰构造方法来禁止对象的实例化。例如项目中的静态工具类需要使用private来修饰构造方法，防止其他人来创建一个静态类对象。如果避免反射来调用的话，在这个私有的构造函数中抛出一个异常；[可用于工具类中]
 
 
 #### 5.使用依赖注入取代硬连接资源
-同样是创建对象，当一个类依赖多个对象[其他资源]时，这些对象会影响该对象的创建，这时候我们可以通过讲创建资源的方式交出去，而不是在该类内部直接创建。例如：
+同样是创建对象，当一个类依赖多个对象[其他资源]时，这些对象会影响该对象的创建，这时候我们可以通过将创建资源的方式交出去，而不是在该类内部直接创建。例如：
 ```java
 class Product {
     private String name;
@@ -281,7 +281,8 @@ class OuterClass {
 
 静态类和非静态类最大的区别就是前者可以独立new出对象，后者得依靠外部类new出对象后才能创建对象，对外部的依赖是比较大。当内部类和外部类的属性具有关联性的时候，使用非静态内部类，当内部类和外部类属性没有任何关联性的时候，使用静态成员类。
 `OuterClass outerClass = new OuterClass();`InnerClass innerClass = outerClass.new InnerClass();`
-::Note: 内部内对象会有个外部类的隐藏指针，如果内部类对象一直存在会影响外部类对象的回收。::
+
+Note: 内部内对象会有个外部类的隐藏指针，如果内部类对象一直存在会影响外部类对象的回收。
 匿名内部类比较好理解：用于将方法作为参数传递实现回调，JDK8有了lambda表达式了，尽量摒弃使用匿名内部类。
 局部内部类：定义在方法中，使用较少。
 局部内部类是定义在函数的内部,不可以用访问修饰符修饰,只能在函数内部使用,随着函数的调用而使用,只能在该函数中实例化对象,和局部变量差不多。
@@ -289,7 +290,7 @@ JDK源码可查看AQS有很多关于静态内部类的使用，总的来看是�
 
 #### 26.不要使用原始类型
 
-作者主要想表达对于集合的使用，提倡使用泛型(List<?> 或者List<T>)而不是原始类型List的方式
+作者主要想表达对于集合的使用，提倡使用泛型(`List<?>` 或者`List<T>`)而不是原始类型List的方式
 提出使用原始类型List的缺点：
 
 + 编译器不能检查，运行时会报ClassCastException错；
@@ -437,7 +438,7 @@ public enum BasicOperation implements Operation {
 > hard to read and maintain.
 > Luckily, there is a happy medium. The following program solves the same problem, using streams without overusing them. The result is a program that’s both shorter and clearer than the original
 
-看到有一处我笑了，作者自己也认为过渡使用lambda会影响可读性、维护性和问题排查，因此要适度使用lambda。另外作者也提供了一些增加可读性的方法论，例如lambda中的代码块过长时，需要重新定义一个方法，那么lambda中只需要获取到该方法的引用就可以了。
+看到有一处我笑了，作者自己也认为过度使用lambda会影响可读性、维护性和问题排查，因此要适度使用lambda。另外作者也提供了一些增加可读性的方法论，例如lambda中的代码块过长时，需要重新定义一个方法，那么lambda中只需要获取到该方法的引用就可以了。
  lambda优于匿名内部类，在lambda中使用方法引用提高程序的可读性；
 
 #### 49.检查参数有效性
@@ -517,9 +518,13 @@ private static final Cheese[] EMPTY_CHEESE_ARRAY = new Cheese[0];
 2.数据更新，例如改变容器中某个index的元素值；
 3.并行集合，如果需要通过所迭代的下标控制另外的容器的迭代下标，这个时候需要使用传统for循环；
 使用迭代器循环需要注意嵌套的情况，如下例子：
+```java
+
 for (Iterator<Face> i = faces.iterator(); i.hasNext(); )
     for (Iterator<Face> j = faces.iterator(); j.hasNext(); )
         System.out.println(i.next() + " " + j.next());
+
+```
 上述的i.next会在第二次循环的时候发生位置移动，如果两个循环都是6个元素的话，预期打印36次，但是实际上只会打印6次。
 
 #### 60. 若需要精确答案就应避免使用 float 和 double 类型
