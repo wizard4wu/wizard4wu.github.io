@@ -121,7 +121,7 @@ ollama:
 
 #### 2.2流式响应
 
-```Java
+```java
     //配置流式输出model对象
     @Bean
     public StreamingChatModel streamChatModel() {
@@ -194,9 +194,7 @@ public String ollamaChatModelMemory(@RequestParam("message") String inputValue) 
 ```Java
 
 ```
-
 对比一下对话记忆的显著作用:
-
 ![image-20250611140411103]({{"/assets/picture/2025/jun/image-20250611140411103.png" | absolute_url}})
 ![image-20250611140436354]({{"/assets/picture/2025/jun/image-20250611140436354.png" | absolute_url}})
 
